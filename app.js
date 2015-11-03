@@ -8,6 +8,18 @@ var page = {
     page.eventsInit();
   },
   eventsInit: function(){
+    $('.userForm').on('submit', function(event){
+          var userData = {message: $('input[name="inputUser"]').val(), color: ''};
+          event.preventDefault();
+          $.ajax({
+            method:'POST',
+            url: page.usersUrl,
+            data: userData,
+            success: function(data){
+              console.log(data);
+            }
+          });
+        });
     $('.messageForm').on('submit', function(event){
       var messageData = {message: $('input[name="inputMessage"]').val(), author: '', color: ''};
       event.preventDefault();
@@ -33,7 +45,9 @@ var page = {
       }
     });
   }
+
 };
+
 $(document).ready(function(){
   page.init();
 });
