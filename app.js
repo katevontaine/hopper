@@ -2,7 +2,9 @@ var page = {
   usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
   init: function(){
-    page.stylesInit();
+    setInterval(function(){
+      page.stylesInit();
+    }, 2000);
     page.eventsInit();
   },
   eventsInit: function(){
@@ -20,7 +22,16 @@ var page = {
     });
   },
   stylesInit: function(){
-
+    $.ajax({
+      method:'GET',
+      url: page.messagesUrl,
+      success: function(messagesArr){
+        messagesArr.reverse();
+        _.each(messagesArr, function(el){
+          console.log(el.message);
+        });
+      }
+    });
   }
 };
 $(document).ready(function(){
