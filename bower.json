@@ -15,12 +15,16 @@
     "Jet Balagtas"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/BlakeGuilloud/hopper",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "underscore": "~1.8.3"
+  }
 }
