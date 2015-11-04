@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
- page.init()
+ page.init();
 });
 
 var page = {
@@ -60,7 +60,7 @@ getUsernames: function(){
         _.each(data, function(el){
           console.log(el.message);
           $(".users").append(el.message+ "<br>");
-                        })
+        });
                               },
 
           });
