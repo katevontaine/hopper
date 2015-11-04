@@ -11,6 +11,7 @@ var page = {
   init: function(){
     page.stylesInIt();
     page.eventsInIt();
+
     setInterval(function(){
       page.getMessage();
     }, 2000);
@@ -18,11 +19,12 @@ var page = {
   eventsInIt: function(){
     page.postMessage();
     page.postUser();
-    page.postAuthor();
     page.deleteMessage();
   },
   stylesInIt: function(){
     page.getUsernames();
+    page.editUser();
+    page.editUserf();
   },
   postUser: function(){
     $('.userForm').on('submit', function(event){
@@ -39,12 +41,40 @@ var page = {
           });
         });
   },
-  postAuthor: function(){
-    $('.userForm').on('submit', function(event){
-          userId = $('input[name="inputUser"]').val();
-    });
+
+  editUser: function(){
+      $('aside p').on("click", ".theUserName", page.editUserf);
   },
-  deleteUser: function(){
+  editUserf: function() {
+    console.log('something');
+    $('body').on("keydown",'p',function(event){
+      if (event.keyCode === 13) {
+        var newUsername = $(this).text();
+        console.log('enter');
+        var userData = {user:newUsername};
+        var userID = $(this).closest('p').data(userID);
+        console.log(userID);
+        event.preventDefault();
+
+        $.ajax({
+          method:'PUT',
+          url: page.usersUrl + "/" + userID.userid,
+          data: userData,
+          success: function(data){
+            console.log("SUCCESS",data);
+          },
+          failure: function(data){
+            console.log("FAILURE")
+          }
+        });
+      }
+    });
+
+
+  },
+
+
+  deleteMessage: function(){
     $('body').on('click','.delete',function(event){
       event.preventDefault();
     $(this).closest('li').remove();
@@ -82,15 +112,7 @@ var page = {
         }
       });
     });
-    // $('body').on('click', function(event){
-    //   event.preventDefault();
-    //   $.ajax({
-    //     url: page.usersUrl + '/' + userArr[0]._id,
-    //     method: 'DELETE',
-    //     success: function(data){
-    //     }
-    //   });
-    // });
+
   },
   getMessage: function(){
     $.ajax({
@@ -113,25 +135,15 @@ getUsernames: function(){
       url: page.usersUrl,
       success: function(data){
         _.each(data, function(el){
+          console.log(el.user);
+          $(".users").append("<p data-userID="+ el._id + " contenteditable='true' class='theUserName'>" + el.user+ "</p><br>");
           page.userArr = data;
-          $(".users").append(el.user+ "<br>");
+          // $(".users").append(el.user+ "<br>");
         });
       },
     });
   },
-deleteMessage: function(){
-   $('body').on('click','.delete',function(event){
-     event.preventDefault();
-   $(this).closest('li').remove();
-   $.ajax({
-     userId: '',
-     method: 'GET',
-     url: page.usersUrl,
-     success: function(data){
-     }
-   });
- });
-},
+
 };
 $(document).ready(function(){
  page.init();
