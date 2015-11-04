@@ -85,6 +85,7 @@ var page = {
       }
     });
   },
+
   deleteMessage: function(){
     _.each(page.messArr, function(el, idx, arr){
       cls = '.delete-' + idx;
@@ -113,6 +114,7 @@ var page = {
         author_id: page.currUser,
         color: '',
       };
+
       $('input[name="inputMessage"]').val('');
       event.preventDefault();
       $.ajax({
@@ -131,6 +133,8 @@ var page = {
       success: function(messagesArr){
         messagesArr.reverse();
         loadMessages = '';
+
+
         page.messArr = messagesArr;
         _.each(messagesArr, function(el, idx){
           loadMessages += "<li data-dataID="+ el._id +">" + el.message + ": " + el.author + '</br>' + "</li>";
