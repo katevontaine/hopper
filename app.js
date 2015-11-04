@@ -1,4 +1,5 @@
     var loadMessages;
+    var userArr;
 var page = {
   usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
@@ -11,7 +12,7 @@ var page = {
   },
   eventsInit: function(){
     $('.userForm').on('submit', function(event){
-          var userData = {message: $('input[name="inputUser"]').val(), color: ''};
+          var userData = {user: $('input[name="inputUser"]').val(), color: ''};
           event.preventDefault();
           $.ajax({
             method:'POST',
@@ -23,6 +24,7 @@ var page = {
         });
     $('.messageForm').on('submit', function(event){
       var messageData = {message: $('input[name="inputMessage"]').val(), author: '', color: ''};
+      $('input[name="inputMessage"]').val('');
       event.preventDefault();
       $.ajax({
         method:'POST',
@@ -55,8 +57,8 @@ getUsernames: function(){
       url: page.usersUrl,
       success: function(data){
         _.each(data, function(el){
-          console.log(el.message);
-          $(".users").append(el.message+ "<br>");
+          userArr = data;
+          $(".users").append(el.user+ "<br>");
         });
       },
     });
@@ -78,3 +80,14 @@ deleteUser: function(){
 $(document).ready(function(){
  page.init();
 });
+window.onbeforeunload = closingCode;
+function closingCode(){
+   $.ajax({
+     url: page.usersUrl + '/' + userArr[0]._id,
+     method: 'DELETE',
+     data: userArr,
+     success: function(data){
+     }
+   });
+   return null;
+}
