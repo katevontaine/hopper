@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  page.init();
+ page.init()
 });
 
 var page = {
@@ -16,10 +16,9 @@ var page = {
     page.deleteUser();
     page.postMessage();
     page.postUser();
-
   },
   stylesInIt: function(){
-    page.getUserNames();
+    page.getUsernames();
   },
   postUser: function(){
     $('.userForm').on('submit', function(event){
@@ -32,6 +31,7 @@ var page = {
             success: function(data){
               console.log(data);
               $('input[name="inputUser"]').val('')
+
             }
           });
         });
@@ -65,9 +65,9 @@ var page = {
           failure: function(data){
             console.log('red')
           }
-        })
-    })
-  })
+        });
+    });
+  });
 },
   getUserNames: function(){
     $.ajax({
@@ -109,10 +109,26 @@ var page = {
           console.log(el.message);
             $('.messages').append(el.message +'<br>');
             $('.messages').val('')
+          console.log(el.thought);
         });
       }
     });
-  }
 
 
-}
+},
+
+getUsernames: function(){
+  $.ajax({
+      method: "GET",
+      url: page.usersUrl,
+      success: function(data){
+        _.each(data, function(el){
+          console.log(el.message);
+          $(".users").append(el.message+ "<br>");
+                        })
+                              },
+
+          });
+                        }
+
+                      };

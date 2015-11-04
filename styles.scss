@@ -1,3 +1,7 @@
+body{
+  color:white;
+
+}
 .container{
   background-color: #F7840f;
   width: 100%;
@@ -15,7 +19,6 @@ aside{
   position: relative;
   display: inline-block;
   color:white;
-
 }
 section{
   background-color: white;
@@ -24,7 +27,7 @@ section{
   display: inline-block;
   width: 60%;
   // padding:10px;
-  color:white;
+  color:blue;
   height: 500px;
   margin: 0 auto;
 }
