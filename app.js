@@ -64,7 +64,7 @@ var page = {
             console.log("SUCCESS",data);
           },
           failure: function(data){
-            console.log("FAILURE")
+            console.log("FAILURE");
           }
         });
       }
@@ -148,7 +148,7 @@ getUsernames: function(){
 $(document).ready(function(){
  page.init();
  $(window).on('beforeunload', function(){
-   console.log("fuck");
+   console.log("NONO");
     $.ajax({
       url: page.usersUrl + '/' + page.currUser,
       method: 'DELETE',
