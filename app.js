@@ -1,6 +1,7 @@
-    var loadMessages;
-    var userArr;
+var loadMessages;
 var page = {
+  userArr: [],
+  currUser: '',
   usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
   init: function(){
@@ -19,6 +20,7 @@ var page = {
             url: page.usersUrl,
             data: userData,
             success: function(data){
+              page.currUser = data._id;
             }
           });
         });
@@ -35,6 +37,15 @@ var page = {
         }
       });
     });
+    // $('body').on('click', function(event){
+    //   event.preventDefault();
+    //   $.ajax({
+    //     url: page.usersUrl + '/' + userArr[0]._id,
+    //     method: 'DELETE',
+    //     success: function(data){
+    //     }
+    //   });
+    // });
   },
   stylesInit: function(){
     $.ajax({
@@ -57,7 +68,7 @@ getUsernames: function(){
       url: page.usersUrl,
       success: function(data){
         _.each(data, function(el){
-          userArr = data;
+          page.userArr = data;
           $(".users").append(el.user+ "<br>");
         });
       },
@@ -79,15 +90,14 @@ deleteUser: function(){
 };
 $(document).ready(function(){
  page.init();
+ $(window).on('beforeunload', function(){
+   console.log("fuck");
+    $.ajax({
+      url: page.usersUrl + '/' + page.currUser,
+      method: 'DELETE',
+      async: false,
+      success: function(data){
+      }
+    });
+ });
 });
-window.onbeforeunload = closingCode;
-function closingCode(){
-   $.ajax({
-     url: page.usersUrl + '/' + userArr[0]._id,
-     method: 'DELETE',
-     data: userArr,
-     success: function(data){
-     }
-   });
-   return null;
-}
