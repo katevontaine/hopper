@@ -42,17 +42,18 @@ var page = {
   },
   postUser: function(){
     $('.userForm').on('submit', function(event){
-          var userData = {
-            user: $('input[name="inputUser"]').val(),
-            color: '',
-            avatar: ''};
+          var userData = {user: $('input[name="inputUser"]').val(), color: ''};
+          _.each(page.userArr, function(el){
+            if(userData.user === el.user){
+              userData.user += 1;
+            }
+          });
           event.preventDefault();
           $.ajax({
             method:'POST',
             url: page.usersUrl,
             data: userData,
             success: function(data){
-              console.log(data._id);
               page.currUser = data._id;
               $('input[name="inputUser"]').val('');
             }
@@ -63,14 +64,11 @@ var page = {
       $('aside p').on("click", ".theUserName", page.editUserf);
   },
   editUserf: function() {
-    console.log('something');
     $('body').on("keydown",'p',function(event){
       if (event.keyCode === 13) {
         var newUsername = $(this).text();
-        console.log('enter');
         var userData = {user:newUsername};
         var userID = $(this).closest('p').data(userID);
-        console.log(userID);
         event.preventDefault();
 
         $.ajax({
@@ -173,7 +171,6 @@ getUsernames: function(){
 $(document).ready(function(){
  page.init();
  $(window).on('beforeunload', function(){
-   console.log("fuck");
     $.ajax({
       url: page.usersUrl + '/' + page.currUser,
       method: 'DELETE',
