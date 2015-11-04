@@ -8,7 +8,7 @@ var page = {
   messArr: [],
   currUser: '',
   usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
-  messagesUrl: "http://tiny-tiny.herokuapp.com/collections/lovelace-messages",
+  messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
 
   init: function(){
     page.editUser();
