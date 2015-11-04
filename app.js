@@ -1,3 +1,8 @@
+
+$(document).ready(function(){
+ page.init();
+});
+
 var page = {
   usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
@@ -6,8 +11,20 @@ var page = {
       page.stylesInit();
     }, 2000);
     page.eventsInit();
+    page.getUsernames();
   },
   eventsInit: function(){
+    $('.userForm').on('submit', function(event){
+          var userData = {message: $('input[name="inputUser"]').val(), color: ''};
+          event.preventDefault();
+          $.ajax({
+            method:'POST',
+            url: page.usersUrl,
+            data: userData,
+            success: function(data){
+            }
+          });
+        });
     $('.messageForm').on('submit', function(event){
       var messageData = {message: $('input[name="inputMessage"]').val(), author: '', color: ''};
       event.preventDefault();
@@ -28,12 +45,25 @@ var page = {
       success: function(messagesArr){
         messagesArr.reverse();
         _.each(messagesArr, function(el){
-          console.log(el.message);
+          console.log(el.thought);
         });
       }
     });
-  }
-};
-$(document).ready(function(){
-  page.init();
-});
+
+  },
+
+getUsernames: function(){
+  $.ajax({
+      method: "GET",
+      url: page.usersUrl,
+      success: function(data){
+        _.each(data, function(el){
+          console.log(el.message);
+          $(".users").append(el.message+ "<br>");
+        });
+                              },
+
+          });
+                        }
+
+                      };
