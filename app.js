@@ -9,8 +9,9 @@ var page = {
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
 
   init: function(){
-    page.eventsInIt();
     page.stylesInIt();
+    page.eventsInIt();
+
     setInterval(function(){
       page.getMessage();
     }, 2000);
@@ -73,7 +74,7 @@ var page = {
   },
 
 
-  deleteUser: function(){
+  deleteMessage: function(){
     $('body').on('click','.delete',function(event){
       event.preventDefault();
     $(this).closest('li').remove();
@@ -142,19 +143,7 @@ getUsernames: function(){
       },
     });
   },
-deleteMessage: function(){
-   $('body').on('click','.delete',function(event){
-     event.preventDefault();
-   $(this).closest('li').remove();
-   $.ajax({
-     userId: '',
-     method: 'GET',
-     url: page.usersUrl,
-     success: function(data){
-     }
-   });
- });
-},
+
 };
 $(document).ready(function(){
  page.init();
