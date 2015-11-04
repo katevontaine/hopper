@@ -1,25 +1,36 @@
     var loadMessages;
 var page = {
-  usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
+  usersUrl: "https://tiny-tiny.herokuapp.com/collections/hopper",
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
 
   editUser: function(){
-    $(".theUserName").click(function() {
-    var txt = $(this);
-    txt.val("updated " + txt.val());
-  });
-
-    $('.theUserName').keydown(function(event) {
-        if (Event.keyCode == 13) {
-          $.ajax({
-            method:'POST',
-            url: page.usersUrl,
-            data: userData,
-            success: function(data){
-            }
-          });
-        }
+      $('aside p').on("click", ".theUserName", page.editUserf);
+  },
+  editUserf: function() {
+    console.log('something');
+    $('body').on("keydown",'p',function(event){
+      if (event.keyCode === 13) {
+        var newUsername = $(this).text();
+        console.log('enter');
+        var userData = {user:newUsername};
+        var userID = $(this).closest('p').data(userID);
+        console.log(userID);
+        $.ajax({
+          method:'PUT',
+          url: page.usersUrl + "/" + userID.userid,
+          data: userData,
+          success: function(data){
+            console.log("SUCCESS",data);
+          },
+          failure: function(data){
+            console.log("FAILURE")
+          }
+        });
+      }
     });
+
+
+///////
   },
   init: function(){
     setInterval(function(){
@@ -28,6 +39,7 @@ var page = {
     page.eventsInit();
     page.getUsernames();
     page.editUser();
+    page.editUserf();
   },
   eventsInit: function(){
     $('.userForm').on('submit', function(event){
@@ -76,7 +88,7 @@ getUsernames: function(){
       success: function(data){
         _.each(data, function(el){
           console.log(el.user);
-          $(".users").append("<p class='theUserName' contenteditable='true'>" + el.user+ "</p><br>");
+          $(".users").append("<p data-userID="+ el._id + " contenteditable='true' class='theUserName'>" + el.user+ "</p><br>");
         });
       },
     });
