@@ -1,9 +1,13 @@
-var loadMessages;
+
 var userId;
 var dataID;
+var loadMessages;
 var page = {
-  usersUrl: "https://tiny-tiny.herokuapp.com/collections/hopper",
-  messagesUrl: "https://tiny-tiny.herokuapp.com/collections/hopper-messages",
+  userArr: [],
+  currUser: '',
+  usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
+  messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
+
   init: function(){
     page.stylesInIt();
     page.eventsInIt();
@@ -14,7 +18,6 @@ var page = {
   eventsInIt: function(){
     page.postMessage();
     page.postUser();
-    page.postAuthor();
     page.deleteMessage();
   },
   stylesInIt: function(){
@@ -24,14 +27,16 @@ var page = {
     $('.userForm').on('submit', function(event){
           var userData = {
             user: $('input[name="inputUser"]').val(),
-            color: ''};
+            color: '',
+            avatar: ''};
           event.preventDefault();
           $.ajax({
             method:'POST',
             url: page.usersUrl,
             data: userData,
             success: function(data){
-              $('input[name="inputUser"]').val('')
+              page.currUser = data._id;
+              $('input[name="inputUser"]').val('');
             }
           });
         });
@@ -46,7 +51,7 @@ var page = {
       event.preventDefault();
     $(this).closest('li').remove();
       var dataID = $(this).closest('li').data();
-      console.log('DATAID', dataID)
+      console.log('DATAID', dataID);
           $.ajax({
             url: page.messagesUrl + '/' + dataID.dataid,
             method:'DELETE',
@@ -66,7 +71,8 @@ var page = {
         author: $('input[name="author"]').val(),
         color: ''
       };
-      $('input[name="inputMessage"]').val('')
+
+      $('input[name="inputMessage"]').val('');
       event.preventDefault();
       $.ajax({
         method:'POST',
@@ -85,25 +91,37 @@ var page = {
         messagesArr.reverse();
         loadMessages = '';
         _.each(messagesArr, function(el){
-          loadMessages += "<li data-dataID="+ el._id +">" + el.message + ": " + userId + '<button class="delete">Delete</button>' + '</br>' + "</li>";
+          loadMessages += "<li data-dataID="+ el._id +">" + "<strong>" +el.message+ "</strong>" + ": " + userId + '<button class="delete">Delete</button>' + '</br>' + "</li>";
         });
         $('.messages').html('');
         $('.messages').append(loadMessages);
       }
     });
-},
-    getUsernames: function(){
-    $.ajax({
-        method: "GET",
-        url: page.usersUrl,
-        success: function(data){
-          _.each(data, function(el){
-            $(".users").append(el.user + "<br>");
-          });
-        },
-      });
   },
+getUsernames: function(){
+  $.ajax({
+      method: "GET",
+      url: page.usersUrl,
+      success: function(data){
+        _.each(data, function(el){
+          page.userArr = data;
+          $(".users").append(el.user+ "<br>");
+        });
+      },
+    });
+  },
+
 };
 $(document).ready(function(){
  page.init();
+ $(window).on('beforeunload', function(){
+   console.log("fuck");
+    $.ajax({
+      url: page.usersUrl + '/' + page.currUser,
+      method: 'DELETE',
+      async: false,
+      success: function(data){
+      }
+    });
+ });
 });

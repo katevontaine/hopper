@@ -1,3 +1,10 @@
+h1 {
+  display: flex;
+  justify-content: center;
+  background-color: #9b8fc2;
+  margin: 0;
+  font-family: fantasy; }
+
 .container {
   width: 100%;
   display: flex;
@@ -5,33 +12,71 @@
   margin: 0auto; }
 
 aside {
-  background-color: #443b62;
+  background-color: #222222;
   margin: 0;
   padding: 0;
-  width: 20%;
-  color: white; }
+  width: 35%;
+  color: #3485DA;
+  font-family: fantasy;
+  font-size: 20px; }
   aside form {
     display: flex;
-    align-items: flex-end; }
+    align-items: flex-end;
+    width: 100%; }
 
 section {
-  background-color: #b8aaec;
-  width: 80%;
+  background-color: #a8c4b7;
+  width: 65%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
-  color: black; }
+  color: #5b4755;
+  font-family: fantasy; }
   section form {
     display: flex;
     align-items: flex-end; }
 
 input {
   color: white;
-  background-color: #CBC912; }
-  input .inputUser {
-    width: 80px; }
-  input .inputMessage {
-    width: 150px; }
+  background-color: #dfe6ad; }
+
+.inputUser {
+  margin-top: 5px;
+  margin-right: 10px; }
+
+.inputMessage {
+  width: 500px;
+  height: 80px;
+  margin-right: 10px; }
+
+li {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  margin-right: 10px; }
+
+.icons {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  justify-content: flex-start;
+  margin: 0;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .icons li {
+    margin-left: 10px; }
+  .icons h6 {
+    margin: 0; }
+
+@media (max-width: 700px) {
+  .container {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 300px; }
+
+  section, aside {
+    width: 100%; } }
 
 /*# sourceMappingURL=compile.css.map */
