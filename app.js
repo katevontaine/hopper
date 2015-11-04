@@ -15,14 +15,16 @@ var page = {
     page.postMessage();
     page.postUser();
     page.postAuthor();
-    page.deleteUser();
+    page.deleteMessage();
   },
   stylesInIt: function(){
     page.getUsernames();
   },
   postUser: function(){
     $('.userForm').on('submit', function(event){
-          var userData = {message: $('input[name="inputUser"]').val(), color: ''};
+          var userData = {
+            user: $('input[name="inputUser"]').val(),
+            color: ''};
           event.preventDefault();
           $.ajax({
             method:'POST',
@@ -39,7 +41,7 @@ var page = {
           userId = $('input[name="inputUser"]').val();
     });
   },
-  deleteUser: function(){
+  deleteMessage: function(){
     $('body').on('click','.delete',function(event){
       event.preventDefault();
     $(this).closest('li').remove();
@@ -54,10 +56,7 @@ var page = {
             failure: function(data){
             }
           });
-});
-  $('body').on('click','.delete', function(event){
-    event.preventDefault();
-      });
+    });
   },
 
   postMessage: function(){
@@ -93,17 +92,17 @@ var page = {
       }
     });
 },
-  getUsernames: function(){
+    getUsernames: function(){
     $.ajax({
         method: "GET",
         url: page.usersUrl,
         success: function(data){
           _.each(data, function(el){
-            $(".users").append(el.message+ "<br>");
+            $(".users").append(el.user + "<br>");
           });
         },
       });
-},
+  },
 };
 $(document).ready(function(){
  page.init();
