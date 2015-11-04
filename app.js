@@ -2,16 +2,36 @@
 var page = {
   usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
+
+  editUser: function(){
+    $(".theUserName").click(function() {
+    var txt = $(this);
+    txt.val("updated " + txt.val());
+  });
+
+    $('.theUserName').keydown(function(event) {
+        if (Event.keyCode == 13) {
+          $.ajax({
+            method:'POST',
+            url: page.usersUrl,
+            data: userData,
+            success: function(data){
+            }
+          });
+        }
+    });
+  },
   init: function(){
     setInterval(function(){
       page.stylesInit();
-    }, 2000);
+    }, 100);
     page.eventsInit();
     page.getUsernames();
+    page.editUser();
   },
   eventsInit: function(){
     $('.userForm').on('submit', function(event){
-          var userData = {message: $('input[name="inputUser"]').val(), color: ''};
+          var userData = {user: $('input[name="inputUser"]').val(), color: ''};
           event.preventDefault();
           $.ajax({
             method:'POST',
@@ -55,8 +75,8 @@ getUsernames: function(){
       url: page.usersUrl,
       success: function(data){
         _.each(data, function(el){
-          console.log(el.message);
-          $(".users").append(el.message+ "<br>");
+          console.log(el.user);
+          $(".users").append("<p class='theUserName' contenteditable='true'>" + el.user+ "</p><br>");
         });
       },
     });
