@@ -11,11 +11,16 @@ var page = {
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
 
   init: function(){
+    page.editUser();
+    page.editUserf();
     page.eventsInit();
+    page.getUsernames();
+    setInterval(function(){
+      page.getUsernames();
+    }, 10000);
     setInterval(function(){
       page.stylesInit();
       page.getMessage();
-      page.getUsernames();
     }, 2000);
     setInterval(function(){
       page.deleteMessage();
@@ -24,8 +29,11 @@ var page = {
   eventsInit: function(){
     page.postUser();
     page.postMessage();
+    page.editUser();
+    page.editUserf();
   },
   stylesInit: function(){
+
     _.each(page.userArr, function(el){
         if(page.currUser === el._id){
           userId = el.user;
@@ -48,6 +56,34 @@ var page = {
           });
         });
   },
+  editUser: function(){
+      $('aside p').on("click", ".theUserName", page.editUserf);
+  },
+  editUserf: function() {
+    console.log('something');
+    $('body').on("keydown",'p',function(event){
+      if (event.keyCode === 13) {
+        var newUsername = $(this).text();
+        console.log('enter');
+        var userData = {user:newUsername};
+        var userID = $(this).closest('p').data(userID);
+        console.log(userID);
+        event.preventDefault();
+
+        $.ajax({
+          method:'PUT',
+          url: page.usersUrl + "/" + userID.userid,
+          data: userData,
+          success: function(data){
+            console.log("SUCCESS",data);
+          },
+          failure: function(data){
+            console.log("FAILURE");
+          }
+        });
+      }
+    });
+  },
   deleteMessage: function(){
     _.each(page.messArr, function(el, idx, arr){
       cls = '.delete-' + idx;
@@ -57,7 +93,6 @@ var page = {
             url: page.messagesUrl + '/' + arr[idx]._id,
             method:'DELETE',
             success: function(blue){
-              console.log("SUCCESS BLUE", blue);
             },
             failure: function(data){
             }
@@ -98,7 +133,6 @@ var page = {
         page.messArr = messagesArr;
         _.each(messagesArr, function(el, idx){
           loadMessages += "<li data-dataID="+ el._id +">" + el.message + ": " + el.author + '</br>' + "</li>";
-          console.log(el.author);
           if(userId === el.author){
             loadMessages += '<button class="delete-'+ idx + ' hidden">Delete</button>';
           }
@@ -116,13 +150,18 @@ getUsernames: function(){
         loadUsers = '';
         page.userArr = data;
         _.each(data, function(el){
-          loadUsers += el.user + "<br/>";
+          loadUsers += "<p data-userID=" + el._id + " contenteditable='true' class='theUserName'>" + el.user + "</p><br/>";
+          page.userArr = data;
+          // $(".users").append(el.user+ "<br>");
         });
         $('.users').html('');
         $('.users').append(loadUsers);
       },
     });
   },
+
+
+
 };
 $(document).ready(function(){
  page.init();
