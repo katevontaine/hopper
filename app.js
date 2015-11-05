@@ -7,7 +7,7 @@ var page = {
   userArr: [],
   messArr: [],
   currUser: '',
-  usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper",
+  usersUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-user",
   messagesUrl: "http://tiny-tiny.herokuapp.com/collections/hopper-messages",
 
   init: function(){
