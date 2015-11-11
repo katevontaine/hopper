@@ -19,6 +19,9 @@ h5 {
   padding: 15px;
   text-align: center; }
 
+.profile {
+  padding-left: 10px; }
+
 .container {
   width: 100%;
   display: flex;
@@ -34,12 +37,18 @@ aside {
   aside form {
     width: 100%;
     font-family: 'Varela Round', sans-serif; }
+  aside img {
+    max-height: 15px;
+    padding: 0; }
+  aside li {
+    padding: 0;
+    margin: 0; }
 
 .users {
   padding-left: 15px; }
 
 .messages {
-  padding-right: 15px; }
+  padding-left: 15px; }
 
 section {
   background-color: #FFB173;
@@ -52,8 +61,7 @@ section {
   font-family: 'Varela Round', sans-serif; }
   section form {
     font-family: 'Varela Round', sans-serif;
-    text-align: right;
-    padding-right: 10px;
+    padding-left: 10px;
     padding-bottom: 10px; }
 
 input {
@@ -83,11 +91,7 @@ input {
   padding: 6px; }
 
 li {
-  list-style: none;
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-  margin-right: 10px; }
+  list-style: none; }
 
 .icons {
   display: flex;
