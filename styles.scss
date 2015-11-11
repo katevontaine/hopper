@@ -1,9 +1,24 @@
+body{
+  font-family: 'Varela Round', sans-serif;
+}
+
 h1{
-display: flex;
-justify-content: center;
-background-color: #9b8fc2;
+background-color: #FF7100;
+color: white;
 margin: 0;
-font-family: fantasy;
+font-family: 'Varela Round', sans-serif;
+text-align: center;
+padding-top: 15px;
+padding-bottom: 15px;
+}
+h5{
+background-color: #FF7100;
+color: white;
+margin: 0;
+font-family: 'Varela Round', sans-serif;
+font-size: 14px;
+padding: 15px;
+text-align: center;
 }
 .container{
   width: 100%;
@@ -12,49 +27,68 @@ font-family: fantasy;
   margin: 0auto;
 }
 aside{
-  background-color: #222222;
-  margin: 0;
-  padding: 0;
+  background-color: #A64A00;
   width: 35%;
-  color: #3485DA;
-  font-family: fantasy;
+  color: white;
+  font-family: 'Varela Round', sans-serif;
   font-size: 20px;
   form {
-    display: flex;
-    align-items: flex-end;
     width: 100%;
+    font-family: 'Varela Round', sans-serif;
   }
 }
+.users{
+  padding-left: 15px;
+}
+.messages{
+  padding-right: 15px;
+}
 section{
-  background-color: #a8c4b7;
+  background-color: #FFB173;
   width: 65%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
-  color: #5b4755;
-  font-family: fantasy;
+  color: white;
+  font-family: 'Varela Round', sans-serif;
+
   form {
-    display: flex;
-    align-items: flex-end;
+    font-family: 'Varela Round', sans-serif;
+    text-align: right;
+    padding-right: 10px;
+    padding-bottom: 10px;
   }
 }
 
 input{
-  color:white;
-  background-color: #dfe6ad;
-
-
+  background-color: white;
+  font-family: 'Varela Round', sans-serif;
+  border-color: white;
+  border-style: solid;
+  border-radius: 5px;
 
 }
-.inputUser{
+.userForm{
   margin-top: 5px;
-  margin-right: 10px;
+  margin-left: 5px;
+  font-size: 16px;
+  button{
+    border: 1px white solid;
+  }
+}
+.messageform{
+  padding-left: 5px;
 }
 .inputMessage{
   width: 500px;
-  height: 80px;
+  height: 22px;
   margin-right: 10px;
+  padding: 5px;
+
+}
+.enterMessage{
+  padding: 6px;
 }
 
 li{
@@ -77,9 +111,19 @@ li{
     margin-left: 10px;
   }
   h6{
-
     margin: 0;
   }
+}
+.del{
+  // padding-left: 10px;
+
+}
+button{
+  font-family: 'Varela Round', sans-serif;
+  background-color:white;
+  border-radius: 5px;
+  color: grey;
+  border: 2px solid white;
 }
 
 @media (max-width: 700px) {

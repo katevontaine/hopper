@@ -139,9 +139,9 @@ var page = {
 
         page.messArr = messagesArr;
         _.each(messagesArr, function(el, idx){
-          loadMessages += "<li data-dataID="+ el._id +">" + el.message + ": " + el.author + '</br>' + "</li>";
+          loadMessages += "<li data-dataID="+ el._id +">" + el.message + ": " + el.author + "</li>";
           if(userId === el.author){
-            loadMessages += '<button class="delete-'+ idx + ' hidden">Delete</button>';
+            loadMessages += '<button class="del delete-'+ idx + ' hidden">X</button>';
           }
         });
         $('.messages').html('');
@@ -157,7 +157,7 @@ getUsernames: function(){
         loadUsers = '';
         page.userArr = data;
         _.each(data, function(el){
-          loadUsers += "<p data-userID=" + el._id + " contenteditable='true' class='theUserName'>" + el.user + "</p><br/>";
+          loadUsers += "<p data-userID=" + el._id + " contenteditable='true' class='theUserName'>" + el.user + "</p>";
           page.userArr = data;
           // $(".users").append(el.user+ "<br>");
         });
